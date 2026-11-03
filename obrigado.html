@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<!-- [QH4 SLOT 1] GTM (head) -->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedido recebido | Marmoraria Milenium</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1F2023">
+<!-- [QH4 SLOT 2] Verificações de domínio -->
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/tracking.js"></script>
+</head>
+<body>
+<!-- [QH4 SLOT 5] GTM (noscript) -->
+<main class="pagina-simples">
+  <div class="caixa">
+    <img src="assets/img/logo-milenium-prata.png" width="800" height="510" alt="Milenium Conceito" class="logo-simples">
+    <h1>Recebemos o seu pedido de orçamento</h1>
+    <p>Estamos abrindo o WhatsApp da Milenium para você falar com a nossa equipe. Isso acontece em <span class="contador" id="contador">3</span> segundos.</p>
+    <div class="hero-acoes">
+      <a href="#" class="btn btn-prata" id="abrir-wa" data-wa-local="obrigado">Abrir o WhatsApp agora</a>
+      <a href="./" class="btn btn-linha">Voltar ao site</a>
+    </div>
+  </div>
+</main>
+<script>
+(function(){
+  var C = window.QH4_CONFIG;
+  var msg = "";
+  try { msg = sessionStorage.getItem("qh4_wa_msg") || ""; } catch(e) {}
+  if (!msg) { var q = new URLSearchParams(location.search).get("m"); if (q) msg = q; }
+  if (!msg) msg = C.mensagemPosFormulario;
+  var link = window.qh4WaLink(msg);
+  var a = document.getElementById("abrir-wa");
+  a.href = link;
+  a.addEventListener("click", function(){ window.qh4Track("whatsapp_click", { wa_local: "obrigado" }); });
+  window.qh4Track("thank_you_view", { form_id: "orcamento" });
+
+  /* [QH4 SLOT 8] Conversão da página de obrigado (gtag direto, só se NÃO usar GTM) */
+  if (C.googleAdsId && C.googleAdsLeadLabel && typeof window.gtag === "function") {
+    window.gtag("event", "conversion", { send_to: C.googleAdsId + "/" + C.googleAdsLeadLabel });
+  }
+
+  var s = Math.max(1, Math.round(C.redirecionarEmMs / 1000)), el = document.getElementById("contador");
+  el.textContent = s;
+  var t = setInterval(function(){ s--; el.textContent = Math.max(s,0); if (s <= 0) { clearInterval(t); try { sessionStorage.removeItem("qh4_wa_msg"); } catch(e) {} location.href = link; } }, 1000);
+})();
+</script>
+<!-- [QH4 SLOT 3] Meta Pixel direto (só sem GTM) -->
+<!-- [QH4 SLOT 4] gtag Google Ads / GA4 direto (só sem GTM) -->
+<!-- [QH4 SLOT 6] Scripts de terceiros -->
+</body>
+</html>
